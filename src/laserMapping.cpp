@@ -675,6 +675,7 @@ void publish_path(rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pubPath, rcl
         pubPath->publish(path);
     }
 
+    std::cout << "doing pub path" << std::endl;
     pubPose->publish(msg_body_pose);
 }
 
@@ -1014,7 +1015,7 @@ private:
             /*** initialize the map kdtree ***/
             if(ikdtree.Root_Node == nullptr)
             {
-                RCLCPP_INFO(this->get_logger(), "Initialize the map kdtree");
+                // RCLCPP_INFO(this->get_logger(), "Initialize the map kdtree");
                 if(feats_down_size > 5)
                 {
                     ikdtree.set_downsample_param(filter_size_map_min);
@@ -1082,6 +1083,8 @@ private:
             t3 = omp_get_wtime();
             map_incremental();
             t5 = omp_get_wtime();
+            std::cout << "path en? " << path_en << std::endl;
+            path_en = true;
             
             /******* Publish points *******/
             if (path_en)                         publish_path(pubPath_, pose_publisher);
