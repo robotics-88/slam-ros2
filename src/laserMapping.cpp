@@ -675,7 +675,6 @@ void publish_path(rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pubPath, rcl
         pubPath->publish(path);
     }
 
-    std::cout << "doing pub path" << std::endl;
     pubPose->publish(msg_body_pose);
 }
 
@@ -1083,7 +1082,6 @@ private:
             t3 = omp_get_wtime();
             map_incremental();
             t5 = omp_get_wtime();
-            std::cout << "path en? " << path_en << std::endl;
             path_en = true;
             
             /******* Publish points *******/
