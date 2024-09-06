@@ -997,7 +997,7 @@ private:
 
             if (feats_undistort->empty() || (feats_undistort == NULL))
             {
-                RCLCPP_WARN(this->get_logger(), "No point, skip this scan!\n");
+                RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000,  "No point, skip this scan!");
                 return;
             }
 
