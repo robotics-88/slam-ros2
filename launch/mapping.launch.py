@@ -17,6 +17,7 @@ def generate_launch_description():
         package_path, 'rviz', 'fastlio.rviz')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
+    base_frame = LaunchConfiguration('base_frame')
     config_path = LaunchConfiguration('config_path')
     config_file = LaunchConfiguration('config_file')
     rviz_use = LaunchConfiguration('rviz')
@@ -25,6 +26,10 @@ def generate_launch_description():
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time', default_value='false',
         description='Use simulation (Gazebo) clock if true'
+    )
+    declare_base_frame_cmd = DeclareLaunchArgument(
+        'base_frame', default_value='base_link',
+        description='Frame ID of slam output'
     )
     declare_config_path_cmd = DeclareLaunchArgument(
         'config_path', default_value=default_config_path,
@@ -47,7 +52,8 @@ def generate_launch_description():
         package='fast_lio',
         executable='fastlio_mapping',
         parameters=[PathJoinSubstitution([config_path, config_file]),
-                    {'use_sim_time': use_sim_time}],
+                    {'use_sim_time': use_sim_time,
+                     'base_frame': base_frame}],
         output='screen'
     )
     rviz_node = Node(
@@ -59,6 +65,7 @@ def generate_launch_description():
 
     ld = LaunchDescription()
     ld.add_action(declare_use_sim_time_cmd)
+    ld.add_action(declare_base_frame_cmd)
     ld.add_action(declare_config_path_cmd)
     ld.add_action(decalre_config_file_cmd)
     ld.add_action(declare_rviz_cmd)
