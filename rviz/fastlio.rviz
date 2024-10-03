@@ -34,9 +34,41 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        body:
+        base_link:
           Value: true
-        camera_init:
+        base_link/Lidar2:
+          Value: true
+        base_link/odom:
+          Value: true
+        base_link_frd:
+          Value: true
+        front_center_custom_body:
+          Value: true
+        front_center_custom_optical:
+          Value: true
+        front_left_custom_body:
+          Value: true
+        front_left_custom_optical:
+          Value: true
+        front_right_custom_body:
+          Value: true
+        front_right_custom_optical:
+          Value: true
+        livox_frame:
+          Value: true
+        map:
+          Value: true
+        map_ned:
+          Value: true
+        odom:
+          Value: true
+        odom_ned:
+          Value: true
+        slam_map:
+          Value: true
+        utm:
+          Value: true
+        velodyne:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -44,9 +76,26 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        camera_init:
-          body:
-            {}
+        slam_map:
+          base_link:
+            base_link/Lidar2:
+              velodyne:
+                {}
+            base_link_frd:
+              {}
+            front_center_custom_body:
+              front_center_custom_optical:
+                {}
+            front_left_custom_body:
+              front_left_custom_optical:
+                {}
+            front_right_custom_body:
+              front_right_custom_optical:
+                {}
+        utm:
+          map:
+            map_ned:
+              {}
       Update Interval: 0
       Value: true
     - Angle Tolerance: 0.10000000149011612
@@ -119,8 +168,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 11.062739372253418
-        Min Value: -13.864188194274902
+        Max Value: 14.71170425415039
+        Min Value: -0.015185019001364708
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -221,7 +270,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
-    Fixed Frame: camera_init
+    Fixed Frame: slam_map
     Frame Rate: 30
   Name: root
   Tools:
@@ -264,7 +313,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 216.99887084960938
+      Distance: 25.726716995239258
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -279,10 +328,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Pitch: 0.5047973394393921
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz_default_plugins)
-      Yaw: 4.88355827331543
+      Yaw: 3.4985475540161133
     Saved: ~
 Window Geometry:
   Displays:
@@ -300,5 +349,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1453
-  X: 368
-  Y: 104
+  X: 326
+  Y: 122
