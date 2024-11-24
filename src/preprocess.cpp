@@ -182,10 +182,14 @@ void Preprocess::avia_handler(const livox_ros_driver2::msg::CustomMsg::UniquePtr
 
           if ((abs(pl_full[i].x - pl_full[i - 1].x) > 1e-7)
               || (abs(pl_full[i].y - pl_full[i - 1].y) > 1e-7)
-              || (abs(pl_full[i].z - pl_full[i - 1].z) > 1e-7)
-              && (pl_full[i].x * pl_full[i].x + pl_full[i].y * pl_full[i].y + pl_full[i].z * pl_full[i].z > (blind * blind)))
+              || (abs(pl_full[i].z - pl_full[i - 1].z) > 1e-7))
           {
-            pl_surf.push_back(pl_full[i]);
+            if ((pl_full[i].x * pl_full[i].x + pl_full[i].y * pl_full[i].y + pl_full[i].z * pl_full[i].z < (blind * blind))) {
+              continue;
+            }
+            else {
+              pl_surf.push_back(pl_full[i]);
+            }
           }
         }
       }
