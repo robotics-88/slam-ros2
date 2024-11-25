@@ -142,7 +142,7 @@ geometry_msgs::msg::Quaternion geoQuat;
 geometry_msgs::msg::PoseStamped msg_body_pose;
 geometry_msgs::msg::PoseStamped pose;
 std::string slam_map_frame = "slam_map";
-std::string base_frame = "base_link";
+std::string base_frame = "livox_frame";
 
 shared_ptr<Preprocess> p_pre(new Preprocess());
 shared_ptr<ImuProcess> p_imu(new ImuProcess());
