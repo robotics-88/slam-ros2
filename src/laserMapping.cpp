@@ -100,6 +100,8 @@ bool   lidar_pushed, flg_first_scan = true, flg_exit = false, flg_EKF_inited;
 bool   scan_pub_en = false, dense_pub_en = false, scan_body_pub_en = false;
 bool    is_first_lidar = true;
 
+double last_x_, last_y_, last_z_;
+
 vector<vector<int>>  pointSearchInd_surf; 
 vector<BoxPointType> cub_needrm;
 vector<PointVector>  Nearest_Points; 
@@ -1079,6 +1081,27 @@ private:
             geoQuat.w = state_point.rot.coeffs()[3];
 
             double t_update_end = omp_get_wtime();
+
+            // Sanity check if we need to reject this state measurement
+            double dist_to_last_x = state_point.pos(0) - last_x_;
+            double dist_to_last_y = state_point.pos(1) - last_y_;
+            double dist_to_last_z = state_point.pos(2) - last_z_;
+
+            // A threshold of 10 meters seems reasonable, no way in 0.1 seconds the drone actually travels 10 meters
+            double thresh = 10.0;
+            if (dist_to_last_x > thresh ||
+                dist_to_last_y > thresh ||
+                dist_to_last_z > thresh)
+            {
+                RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "SLAM sanity check failed, measurement was [%f, %f, %f]", 
+                                     state_point.pos(0), state_point.pos(1), state_point.pos(2));
+                return;
+            }
+            else {
+                last_x_ = state_point.pos(0);
+                last_y_ = state_point.pos(1);
+                last_z_ = state_point.pos(2);
+            }
 
             /******* Publish odometry and pose *******/
             publish_odometry(pubOdomAftMapped_, pubPose_, tf_broadcaster_);
